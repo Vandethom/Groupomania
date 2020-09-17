@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <header>
+      <navbar />
+    </header>
     <img alt="Vue logo" src="./assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
@@ -13,6 +16,7 @@ export default {
   name: "App",
   components: {
     HelloWorld,
+    Navbar,
   },
 };
 </script>
@@ -25,5 +29,13 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+html {
+  margin: 0;
+}
+
+body {
+  margin: 0;
 }
 </style>
