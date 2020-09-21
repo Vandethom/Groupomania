@@ -9,6 +9,7 @@
         </a>
       </li>
       <li class="item">
+        <i class="fas fa-search"></i>
         <input class="searchBar" type="text" placeholder="Search" />
       </li>
       <li class="item">Se connecter</li>
@@ -53,7 +54,10 @@ function toggleHideDisplay() {
 
 nav {
   background: #222;
-  padding: 0;
+  padding: 5px 0 0 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
 ul {
@@ -83,6 +87,8 @@ img {
 }
 
 .searchBar {
+  line-height: 3vh;
   width: 500px;
+  border-radius: 6px 6px;
 }
 </style>

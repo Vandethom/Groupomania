@@ -1,22 +1,28 @@
 <template>
   <div id="app">
-    <header>
-      <navbar />
-    </header>
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <Navbar />
+    <SideMenu />
+
+    <div id="nav">
+      <router-link to="/">Home</router-link>|
+      <router-link to="/about">About</router-link>
+    </div>
+    <CreatePost />
+    <router-view />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
 import Navbar from "./components/navbar.vue";
+import SideMenu from "./components/sideMenu.vue";
+import CreatePost from "./components/createPost.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
     Navbar,
+    SideMenu,
+    CreatePost,
   },
 };
 </script>
@@ -28,14 +34,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
-html {
-  margin: 0;
+#nav {
+  padding: 30px;
 }
 
-body {
-  margin: 0;
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
