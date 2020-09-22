@@ -56,8 +56,10 @@ nav {
   background: #222;
   padding: 5px 0 0 0;
   position: absolute;
+  left: 0;
   top: 0;
   width: 100%;
+  box-shadow: 3px 0px 6px 7px;
 }
 
 ul {

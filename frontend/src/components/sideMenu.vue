@@ -53,7 +53,9 @@ ul {
   left: 20vh;
   top: 7vh;
   list-style-type: none;
+  box-shadow: 10px 7px 8px rgb(97, 92, 92);
   background-color: rgb(54, 45, 45);
+
   color: rgb(243, 242, 237);
   width: 25vh;
   height: 90vh;

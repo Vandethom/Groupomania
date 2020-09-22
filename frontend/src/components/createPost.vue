@@ -2,7 +2,12 @@
 
 <template>
   <section>
-    <input type="text" class="writingZone" />
+    <textarea
+      cols="65"
+      rows="10"
+      placeholder="Qu'avez-vous à raconter aujourd'hui?"
+      class="writingZone"
+    />
   </section>
 </template>
 
@@ -23,6 +28,7 @@ export default {
 }
 
 .writingZone {
-  padding: 7.5vh 18vh;
+  /* padding: 7.5vh 18vh;*/
+  margin-top: 10vh;
 }
 </style>
