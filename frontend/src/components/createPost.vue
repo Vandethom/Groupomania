@@ -26,7 +26,6 @@ export default {
   margin: 0;
   font-size: 16px;
 }
-
 .writingZone {
   /* padding: 7.5vh 18vh;*/
   margin-top: 10vh;
