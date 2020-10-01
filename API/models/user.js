@@ -28,6 +28,8 @@ connection.sync().then(function () {
      });
 });
 
+// module.exports
+
 
 /*
 

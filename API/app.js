@@ -14,7 +14,7 @@ require('dotenv').config()
 
 /* ------------------------------ Routes ------------------------------ */
 
-//const userRoutes = require('./routes/user');
+const userRoutes = require('./routes/user');
 
 
 
@@ -45,7 +45,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 //app.use('/api/posts', sauceRoutes);
-//app.use('/api/auth', userRoutes);
+app.use('/api/auth', userRoutes);
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');

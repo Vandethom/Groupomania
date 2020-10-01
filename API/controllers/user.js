@@ -1,5 +1,11 @@
 /* ------------------------- Requirements ------------------------- */
 
+const Sequelize = require('sequelize');
+const connection = new Sequelize('groupomania', 'root', process.env.MySQLPassword, {
+    host: 'localhost',
+    dialect: 'mysql'
+}); //connecting with 3 arguments : db_name/user/password
+
 const User = require('../models/user');
 
 const bcrypt = require('bcrypt');
@@ -7,10 +13,8 @@ const jwt = require('jsonwebtoken');
 const { user } = require('../../db.config');
 //const helmet = require('helmet');
 
-const User = require('../models/user');
 
-
-/* ------------------------- Masking mail ------------------------- */
+/* ------------------------- Masking mail in Database ------------------------- */
 
 function maskEmail(email) {
     // function used with signUp and signIn in order to replace characters with '*'
@@ -44,7 +48,7 @@ exports.signup = (req, res, next) => {
             name: 'Jane',
             surname: 'Cannary',
             pseudonym: 'Calamity Jane',
-            password: 'BootySack'
+            password: 'BootySack',
             gender: 'F',
             email: 'birdy@msn.fr',
             description: `Voler, violer, et autres crimes, pour un pays moins sûr.`
@@ -53,7 +57,7 @@ exports.signup = (req, res, next) => {
 };
 
 
-/*
+/* ---------------- To use in Signup
 bcrypt
         .hash(req.body.password, 10) // hashes password 10 times
         .then((hash) => {
@@ -108,11 +112,9 @@ exports.login = (req, res, next) => {
 /* ------------------------- Retrieving Account Informations ------------------------- */
 
 exports.getUser = (req, res, next) => {
-    User.findOne({ _id: req.params.id })
-        .then(user => res.status(200).json({
-            user
-        }))
-        .catch(error => res.status(403).json({
-            'Veuillez vous reconnecter pour afficher votre compte.'
-    });
+    connection.sync().then(function () {
+        User.findById(1).then(function (user) {
+            console.log(user.dataValues);
+        })
+    })
 };
