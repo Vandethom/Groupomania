@@ -1,16 +1,17 @@
 /* ------------------------- Requirements ------------------------- */
+require('dotenv').config();
 
+const mysql = require('../mysql');
 const Sequelize = require('sequelize');
 const connection = new Sequelize('groupomania', 'root', process.env.MySQLPassword, {
     host: 'localhost',
     dialect: 'mysql'
 }); //connecting with 3 arguments : db_name/user/password
 
-const User = require('../models/user');
+const models = require('../models/user');
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { user } = require('../../db.config');
 //const helmet = require('helmet');
 
 
@@ -43,20 +44,36 @@ function maskEmail(email) {
 
 /* ------------------------- Signing Up User ------------------------- */
 exports.signup = (req, res, next) => {
-    connection.sync().then(function () {
-        User.create({
-            name: 'Jane',
-            surname: 'Cannary',
-            pseudonym: 'Calamity Jane',
-            password: 'BootySack',
-            gender: 'F',
-            email: 'birdy@msn.fr',
-            description: `Voler, violer, et autres crimes, pour un pays moins sûr.`
-        });
-    });
+    connection.sync()
+        .then(function () {
+            const user = {
+                name: 'Jake',
+                surname: 'Rattlesnake',
+                pseudonym: 'Rango',
+                password: 'FarWest',
+                gender: 'H',
+                email: 'rango@aol.com',
+                description: `Piller, truander, menacer. Tout un programme.`
+            }
+            User.create(user)
+        })
+        .then(data => res.status(201).json({
+            message: 'Utilisateur créé !'
+        }))
+        .catch(error => res.status(500).json({ error: 'Try again !' }))
 };
-
-
+/*
+connection.sync().then(function () {
+    User.create({
+        name: 'Jake',
+        surname: 'Rattlesnake',
+        pseudonym: 'Rango',
+        password: 'FarWest',
+        gender: 'H',
+        email: 'rango@aol.com',
+        description: `Piller, truander, menacer. Tout un programme.`
+    });
+});*/
 /* ---------------- To use in Signup
 bcrypt
         .hash(req.body.password, 10) // hashes password 10 times
@@ -112,9 +129,24 @@ exports.login = (req, res, next) => {
 /* ------------------------- Retrieving Account Informations ------------------------- */
 
 exports.getUser = (req, res, next) => {
-    connection.sync().then(function () {
-        User.findById(1).then(function (user) {
-            console.log(user.dataValues);
+    if (req.method == "GET") {
+        let user = `SELECT * FROM Users`;
+        mysql.query(user, function (err, result) {
+            if (result.length > 0) {
+                res.status(200).json({ result })
+            } else {
+                res.status(401).json({ message: "Erreur dans la récupération du profile !" })
+            }
         })
-    })
+    }
 };
+/*
+
+User.findByPk(1)
+            .then(function (user) {
+                console.log(user.dataValues);
+            })
+            .catch((error) => res.status(500).json({ error }));
+    })
+
+*/
