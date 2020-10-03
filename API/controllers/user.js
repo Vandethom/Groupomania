@@ -1,7 +1,16 @@
 /* ------------------------- Requirements ------------------------- */
+const dotenv = require('dotenv');
 require('dotenv').config();
 
-const mysql = require('../mysql');
+const mysql = require('mysql');
+
+
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "Nogotheg7",
+    database: "groupomania"
+});
 const Sequelize = require('sequelize');
 const connection = new Sequelize('groupomania', 'root', process.env.MySQLPassword, {
     host: 'localhost',
@@ -129,24 +138,11 @@ exports.login = (req, res, next) => {
 /* ------------------------- Retrieving Account Informations ------------------------- */
 
 exports.getUser = (req, res, next) => {
-    if (req.method == "GET") {
-        let user = `SELECT * FROM Users`;
-        mysql.query(user, function (err, result) {
-            if (result.length > 0) {
-                res.status(200).json({ result })
-            } else {
-                res.status(401).json({ message: "Erreur dans la récupération du profile !" })
-            }
-        })
-    }
+    con.connect(function (err) {
+        if (err) throw err;
+        con.query("SELECT * FROM Users", function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+        });
+    });
 };
-/*
-
-User.findByPk(1)
-            .then(function (user) {
-                console.log(user.dataValues);
-            })
-            .catch((error) => res.status(500).json({ error }));
-    })
-
-*/

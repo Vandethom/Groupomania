@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const mysql = require('../mysql');
+const mysql = require('mysql');
 const Sequelize = require('sequelize');
 const connection = new Sequelize('groupomania', 'root', process.env.MySQLPassword, {
     host: 'localhost',
@@ -13,8 +13,10 @@ const User = connection.define('user', {
         allowNull: false,
         validate: {
             notNull: true,
-            len: args: [1, 500],
-            msg: 'Veillez à ce que votre message ne dépasse pas 500 caractères mais en comporte au moins un 😉.'
+            len: {
+                args: [1, 500],
+                msg: 'Veillez à ce que votre message ne dépasse pas 500 caractères mais en comporte au moins un 😉.'
+            }
         }
     },
     image: {},

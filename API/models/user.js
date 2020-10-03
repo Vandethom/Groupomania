@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const mysql = require('../mysql');
+const mysql = require('mysql');
 const Sequelize = require('sequelize');
 const connection = new Sequelize('groupomania', 'root', process.env.MySQLPassword, {
      host: 'localhost',
@@ -58,8 +58,8 @@ const User = connection.define('user', {
      }
 });
 
-
 /*
+
 connection.sync().then(function () {
      User.create({
           name: 'Jake',
