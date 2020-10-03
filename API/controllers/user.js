@@ -8,7 +8,7 @@ const mysql = require('mysql');
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Nogotheg7",
+    password: process.env.MySQLPassword,
     database: "groupomania"
 });
 const Sequelize = require('sequelize');
