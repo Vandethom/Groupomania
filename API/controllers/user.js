@@ -56,13 +56,20 @@ function maskEmail(email) {
 exports.signup = (req, res, next) => {
     connection.connect(function (error) {
         if (error) throw err;
-        const values = `('Martha Jane', 'Canary', 'Calamity Jane', '01081852', 'F', 'calmm@msn.fr', 'I am a f***ing gangster !')`;
-        const sql = `INSERT INTO Users (name, surname, pseudonym, password, gender, email, description) 
-        VALUES ${values}`;
+        const name = req.body.name;
+        const surname = req.body.surname;
+        const pseudonym = req.body.pseudonym;
+        const password = req.body.password.password;
+        const gender = req.body.gender;
+        const email = req.body.email;
+        const description = req.body.description;
+        const user = `('${name}', '${surname}', '${pseudonym}', '${password}', '${gender}', '${email}', '${description}')`;
+        const sql =
+            `INSERT INTO Users (name, surname, pseudonym, password, gender, email, description) VALUES ${user}`;
 
         connection.query(sql, function (error, result) {
             if (error) throw error;
-            console.log('L\'utilisateur vient d\être ajouté aux profils');
+            console.log('L\'utilisateur vient d\'être ajouté aux profils');
         })
     })
 }
