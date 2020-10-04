@@ -23,6 +23,7 @@ const models = require('../models/user');
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { param } = require('../routes/user');
 //const helmet = require('helmet');
 
 
@@ -80,25 +81,6 @@ exports.signup = (req, res, next) => {
     });
 };
 
-
-/* ---------------- To use in Signup
-bcrypt
-        .hash(req.body.password, 10) // hashes password 10 times
-        .then((hash) => {
-            const user = new User({
-                email: maskEmail(sanitize(req.body.email)),
-                password: sanitize(hash),
-            });
-            user
-                .save()
-                .then(() => res.status(201).json({
-                    message: 'Utilisateur créé !'
-                }))
-                .catch((error) => res.status(400).json({
-                    error: 'Entrez un nom d\'utilisateur et un mot de passe correct'
-                }))
-        });
-        */
 /* ------------------------- Signing In User ------------------------- */
 
 exports.login = (req, res, next) => {
@@ -137,7 +119,7 @@ exports.login = (req, res, next) => {
 
 exports.getUser = (req, res, next) => {
     connection.connect(function (error) {
-        if (error) throw err;
+        if (error) throw error;
         connection.query("SELECT * FROM Users", function (error, result, fields) {
             if (error) throw error;
             console.log(result);
@@ -146,3 +128,14 @@ exports.getUser = (req, res, next) => {
         .then((result) => res.status(200).json({ result }))
         .catch((error) => res.status(500).json({ error: 'Bah ça marche pas.' }))
 };
+
+/* ------------------------- Delete Account ------------------------- */
+
+exports.deleteUser = (req, res, next) => {
+    connection.connect(function (error) {
+        if (error) throw error;
+        const userId = req.params.id;
+        connection.query(`DELETE FROM Users WHERE id=${userId}`);
+        console.log(`${pseudonym} vient d\'être supprimé des profils existants`);
+    })
+}
