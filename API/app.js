@@ -7,6 +7,7 @@ const path = require('path');
 const app = express();
 const req = require('request');
 const res = require('res');
+const helmet = require('helmet');
 
 const mysql = require('mysql');
 
@@ -40,6 +41,7 @@ app.get('/insert', (req, res, next => {
         })
 }))
 
+app.use(helmet());
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));

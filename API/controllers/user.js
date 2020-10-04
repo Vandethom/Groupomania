@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 require('dotenv').config();
 
 const mysql = require('mysql');
+const sanitize = require('sanitize');
+const helmet = require('helmet');
 
 
 var connection = mysql.createConnection({
@@ -55,58 +57,30 @@ function maskEmail(email) {
 
 exports.signup = (req, res, next) => {
     connection.connect(function (error) {
-        if (error) throw err;
-        const name = req.body.name;
-        const surname = req.body.surname;
-        const pseudonym = req.body.pseudonym;
-        const password = req.body.password.password;
-        const gender = req.body.gender;
-        const email = req.body.email;
-        const description = req.body.description;
-        const user = `('${name}', '${surname}', '${pseudonym}', '${password}', '${gender}', '${email}', '${description}')`;
-        const sql =
-            `INSERT INTO Users (name, surname, pseudonym, password, gender, email, description) VALUES ${user}`;
+        bcrypt
+            .hash(req.body.password, 10)
+            .then((hash) => {
+                if (error) throw err;
+                const name = req.body.name;
+                const surname = req.body.surname;
+                const pseudonym = req.body.pseudonym;
+                const password = hash;
+                const gender = req.body.gender;
+                const email = maskEmail(req.body.email);
+                const description = req.body.description;
+                const user = `('${name}', '${surname}', '${pseudonym}', '${password}', '${gender}', '${email}', '${description}')`;
+                const sql =
+                    `INSERT INTO Users (name, surname, pseudonym, password, gender, email, description) VALUES ${user}`;
 
-        connection.query(sql, function (error, result) {
-            if (error) throw error;
-            console.log('L\'utilisateur vient d\'être ajouté aux profils');
-        })
-    })
-}
-
-
-/* Celle qui fonctionne.... presque;
-exports.signup = (req, res, next) => {
-    connection.sync()
-        .then(function () {
-            const user = {
-                name: 'Jake',
-                surname: 'Rattlesnake',
-                pseudonym: 'Rango',
-                password: 'FarWest',
-                gender: 'H',
-                email: 'rango@aol.com',
-                description: `Piller, truander, menacer. Tout un programme.`
-            }
-            User.create(user)
-        })
-        .then(data => res.status(201).json({
-            message: 'Utilisateur créé !'
-        }))
-        .catch(error => res.status(500).json({ error: 'Try again !' }))
+                connection.query(sql, function (error, result) {
+                    if (error) throw error;
+                    console.log(`${pseudonym} vient d\'être ajouté aux profils`);
+                });
+            });
+    });
 };
 
-connection.sync().then(function () {
-    User.create({
-        name: 'Jake',
-        surname: 'Rattlesnake',
-        pseudonym: 'Rango',
-        password: 'FarWest',
-        gender: 'H',
-        email: 'rango@aol.com',
-        description: `Piller, truander, menacer. Tout un programme.`
-    });
-});*/
+
 /* ---------------- To use in Signup
 bcrypt
         .hash(req.body.password, 10) // hashes password 10 times
