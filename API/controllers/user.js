@@ -1,11 +1,20 @@
 /* ------------------------- Requirements ------------------------- */
+
+/* -------------------- Security -------------------- */
+
 const dotenv = require('dotenv');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const sanitize = require('sanitize');
+//const helmet = require('helmet');
 require('dotenv').config();
 
-const mysql = require('mysql');
-const sanitize = require('sanitize');
-const helmet = require('helmet');
+/* -------------------- Libraries and connection -------------------- */
 
+const mysql = require('mysql');
+const Sequelize = require('sequelize');
+const models = require('../models/user');
+const { param } = require('../routes/user');
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -13,18 +22,11 @@ var connection = mysql.createConnection({
     password: process.env.MySQLPassword,
     database: "groupomania"
 });
-const Sequelize = require('sequelize');
+
 /*const connection = new Sequelize('groupomania', 'root', process.env.MySQLPassword, {
     host: 'localhost',
     dialect: 'mysql'
 }); //connecting with 3 arguments : db_name/user/password*/
-
-const models = require('../models/user');
-
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { param } = require('../routes/user');
-//const helmet = require('helmet');
 
 
 /* ------------------------- Masking mail in Database ------------------------- */
@@ -69,12 +71,25 @@ exports.signup = (req, res, next) => {
                 const gender = req.body.gender;
                 const email = maskEmail(req.body.email);
                 const description = req.body.description;
-                const user = `('${name}', '${surname}', '${pseudonym}', '${password}', '${gender}', '${email}', '${description}')`;
+                const user = `
+                ('${name}',
+                 '${surname}',
+                  '${pseudonym}',
+                   '${password}',
+                    '${gender}',
+                     '${email}',
+                      '${description}')`;
                 const sql =
                     `INSERT INTO Users (name, surname, pseudonym, password, gender, email, description) VALUES ${user}`;
-
                 connection.query(sql, function (error, result) {
-                    if (error) throw error;
+                    if (error) {
+                        res.status(403).json({
+                            error: `Veillez à créer un utilisateur qui n'existe pas déjà et en remplissant tous les champs.`
+                        })
+                    };
+                    return res.status(201).json({
+                        message: `L'utilisateur ${pseudonym} vient d'être ajouté aux profils.`
+                    })
                     console.log(`${pseudonym} vient d\'être ajouté aux profils`);
                 });
             });
@@ -83,6 +98,39 @@ exports.signup = (req, res, next) => {
 
 /* ------------------------- Signing In User ------------------------- */
 
+exports.login = (req, res, next) => {
+    connection.connect(function (error) {
+        const email = maskEmail(req.body.email);
+        const password = req.body.password;
+
+        connection.query(
+            `SELECT * FROM Users WHERE email=${email};`,
+            function (error, response, fields) {
+                if (error) {
+                    throw error;
+                }
+                bcrypt
+                    .compare(req.body.password, user.password)
+                    .then((valid) => {
+                        if (!valid) {
+                            return res.status(401).json({
+                                error: 'Mot de passe incorrect.'
+                            });
+                        }
+                        res.status(200).json({
+                            userId: user._id,
+                            token: jwt.sign({
+                                userId: user._id
+                            }, process.env.token, {
+                                expiresIn: '24h'
+                            })
+                        })
+                    })
+            });
+    })
+}
+
+/*
 exports.login = (req, res, next) => {
     User.findOne({ email: maskEmail(req.body.email) })
         .then((valid) => {
@@ -120,22 +168,37 @@ exports.login = (req, res, next) => {
 exports.getUser = (req, res, next) => {
     connection.connect(function (error) {
         if (error) throw error;
-        connection.query("SELECT * FROM Users", function (error, result, fields) {
-            if (error) throw error;
-            console.log(result);
-        });
+        const userId = req.body.id;
+        connection.query(
+            `SELECT * FROM Users WHERE id=${userId};`,
+            function (error, response, fields) {
+                if (error) {
+                    res.status(404).json({
+                        error: `L'utilisateur que vous cherchez n'existe pas, tentez une reconnexion pour résoudre ce problème.`
+                    })
+                };
+                return res.status(200).json({
+                    message: response
+                })
+            });
     })
-        .then((result) => res.status(200).json({ result }))
-        .catch((error) => res.status(500).json({ error: 'Bah ça marche pas.' }))
-};
+}
 
 /* ------------------------- Delete Account ------------------------- */
 
 exports.deleteUser = (req, res, next) => {
     connection.connect(function (error) {
-        if (error) throw error;
         const userId = req.params.id;
-        connection.query(`DELETE FROM Users WHERE id=${userId}`);
-        console.log(`${pseudonym} vient d\'être supprimé des profils existants`);
+        connection.query(
+            `DELETE FROM Users WHERE id=${userId}`
+        );
+        if (error) {
+            res.status(404).json({
+                error: `L'utilisateur que vous cherchez n'existe pas, tentez de vous reconnecter pour résoudre ce problème.`
+            })
+        }
+        return res.status(204).json({
+            message: `${pseudonym} vient d\'être supprimé des profils existants`
+        })
     })
 }
