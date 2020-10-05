@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const postCtrl = require('..controller/controllers/post');
+const postCtrl = require('../controllers/post');
 
 router.post('/', postCtrl.createPost);
 router.get('/', postCtrl.getAllPosts);
-router.get('/:id', userCtrl.getOnePost);
+router.get('/:id', postCtrl.getOnePost);
 router.put('/:id', postCtrl.editPost);
 router.delete('/:id', postCtrl.deletePost);
 router.post('/like/:id', postCtrl.likePost);

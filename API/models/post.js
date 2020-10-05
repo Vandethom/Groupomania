@@ -7,7 +7,7 @@ const connection = new Sequelize('groupomania', 'root', process.env.MySQLPasswor
     dialect: 'mysql'
 }); //connecting with 3 arguments : db_name/user/password
 
-const User = connection.define('user', {
+const Post = connection.define('user', {
     body: {
         type: Sequelize.TEXT,
         allowNull: false,
@@ -19,7 +19,10 @@ const User = connection.define('user', {
             }
         }
     },
-    image: {},
+    image: {
+        type: Sequelize.BLOB,
+        allowNull: true
+    },
     postUser: {
         type: Sequelize.STRING,
         allowNull: false

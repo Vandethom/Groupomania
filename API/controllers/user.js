@@ -13,7 +13,7 @@ require('dotenv').config();
 
 const mysql = require('mysql');
 const Sequelize = require('sequelize');
-const models = require('../models/user');
+const User = require('../models/user');
 const { param } = require('../routes/user');
 
 var connection = mysql.createConnection({
@@ -63,7 +63,6 @@ exports.signup = (req, res, next) => {
         bcrypt
             .hash(req.body.password, 10)
             .then((hash) => {
-                if (error) throw err;
                 const name = req.body.name;
                 const surname = req.body.surname;
                 const pseudonym = req.body.pseudonym;

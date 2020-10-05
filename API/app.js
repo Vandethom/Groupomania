@@ -16,6 +16,7 @@ require('dotenv').config()
 /* ------------------------------ Routes ------------------------------ */
 
 const userRoutes = require('./routes/user');
+const postRoutes = require('./routes/post');
 
 
 
@@ -46,7 +47,8 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
-//app.use('/api/posts', sauceRoutes);
+
+app.use('/api', postRoutes);
 app.use('/api/auth', userRoutes);
 
 app.use((req, res, next) => {
