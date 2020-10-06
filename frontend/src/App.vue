@@ -2,12 +2,10 @@
   <div id="app">
     <Navbar />
     <SideMenu />
-
     <!--    <div id="nav">
       <router-link to="/">Home</router-link>|
       <router-link to="/about">About</router-link>
     </div>-->
-    <CreatePost />
     <router-view />
   </div>
 </template>
@@ -15,14 +13,12 @@
 <script>
 import Navbar from "./components/navbar.vue";
 import SideMenu from "./components/sideMenu.vue";
-import CreatePost from "./components/createPost.vue";
 
 export default {
   name: "App",
   components: {
     Navbar,
     SideMenu,
-    CreatePost,
   },
 };
 </script>

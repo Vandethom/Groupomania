@@ -4,15 +4,18 @@
   <nav>
     <ul>
       <li class="logo">
-        <a href="index.html">
+        <router-link to="/">
           <img src="../../images/navbarIcon.png" alt="Site Icon" />
-        </a>
+        </router-link>
       </li>
       <li class="item">
         <i class="fas fa-search"></i>
         <input class="searchBar" type="text" placeholder="Search" />
       </li>
       <li class="item">Se connecter</li>
+      <router-link to="/auth">
+        <li class="item">Créer un compte</li>
+      </router-link>
       <li class="has-submenu">
         Mon compte
         <ul class="submenu">

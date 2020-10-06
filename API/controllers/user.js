@@ -197,7 +197,7 @@ exports.deleteUser = (req, res, next) => {
             })
         }
         return res.status(204).json({
-            message: `${pseudonym} vient d\'être supprimé des profils existants`
+            message: `vient d'être supprimé des profils existants` //pseudonym
         })
     })
 }
