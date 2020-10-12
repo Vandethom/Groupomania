@@ -20,6 +20,7 @@ export default {
     Navbar,
     SideMenu,
   },
+  methods: {},
 };
 </script>
 

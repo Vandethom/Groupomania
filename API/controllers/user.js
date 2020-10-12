@@ -169,7 +169,7 @@ exports.getUser = (req, res, next) => {
         if (error) throw error;
         const userId = req.body.id;
         connection.query(
-            `SELECT * FROM Users WHERE id=${userId};`,
+            `SELECT * FROM Users;`,
             function (error, response, fields) {
                 if (error) {
                     res.status(404).json({
