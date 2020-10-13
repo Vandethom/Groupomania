@@ -13,7 +13,8 @@ const mysql = require('mysql');
 const Sequelize = require('sequelize');
 const { param } = require('../routes/post');
 
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
+    connectionLimit: 10,
     host: 'localhost',
     user: 'root',
     password: process.env.MySQLPassword,
@@ -25,7 +26,7 @@ const connection = mysql.createConnection({
 /* ------------------------- Create new post ------------------------- */
 
 exports.createPost = (req, res, next) => {
-    connection.connect(function (error) {
+    connection.getConnection(function (error) {
         const body = req.body.body;
         // const image = req.body.image;
         const userId = req.body.userId;
@@ -41,7 +42,7 @@ exports.createPost = (req, res, next) => {
         const sql =
             `INSERT INTO Posts (body, userId) VALUES ${post}`;
 
-        connection.query(sql, function (error, response) {
+        connection.getConnection(sql, function (error, response) {
             if (error) {
                 res.status(403).json({
                     error: `Remplissez correctement tous les champs avant d'envoyer votre requête.`
@@ -57,7 +58,7 @@ exports.createPost = (req, res, next) => {
 /* ------------------------- Get all posts ------------------------- */
 
 exports.getAllPosts = (req, res, next) => {
-    connection.connect(function (error) {
+    connection.getConnection(function (error) {
         const postId = req.body.id;
 
         connection.query(
@@ -79,7 +80,7 @@ exports.getAllPosts = (req, res, next) => {
 /* ------------------------- Get one post ------------------------- */
 
 exports.getOnePost = (req, res, next) => {
-    connection.connect(function (error) {
+    connection.getConnection(function (error) {
         const postId = req.params.id;
 
         connection.query(
@@ -107,7 +108,7 @@ exports.editPost = (req, res, next) => {
 /* ------------------------- Delete a post ------------------------- */
 
 exports.deletePost = (req, res, next) => {
-    connection.connect(function (error) {
+    connection.getConnection(function (error) {
         const postId = req.params.id;
 
         connection.query(

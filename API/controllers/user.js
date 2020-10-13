@@ -16,7 +16,16 @@ const Sequelize = require('sequelize');
 const User = require('../models/user');
 const { param } = require('../routes/user');
 
-var connection = mysql.createConnection({
+const connection = mysql.createPool({
+    connectionLimit: 10,
+    host: 'localhost',
+    user: 'root',
+    password: process.env.MySQLPassword,
+    database: 'groupomania'
+});
+
+
+/*var connection = mysql.createConnection({ //createPool
     host: "localhost",
     user: "root",
     password: process.env.MySQLPassword,
@@ -59,7 +68,7 @@ function maskEmail(email) {
 /* ------------------------- Signing Up User ------------------------- */
 
 exports.signup = (req, res, next) => {
-    connection.connect(function (error) {
+    connection.getConnection(function (error) {
         bcrypt
             .hash(req.body.password, 10)
             .then((hash) => {
@@ -91,14 +100,17 @@ exports.signup = (req, res, next) => {
                     })
                     console.log(`${pseudonym} vient d\'être ajouté aux profils`);
                 });
-            });
+            })
+            .catch((error) => res.status(403).json({
+                error: `Veillez à créer un utilisateur qui n'existe pas déjà et en remplissant tous les champs.`
+            }))
     });
 };
 
 /* ------------------------- Signing In User ------------------------- */
 
 exports.login = (req, res, next) => {
-    connection.connect(function (error) {
+    connection.getConnection(function (error) {
         const email = maskEmail(req.body.email);
         const password = req.body.password;
 
@@ -165,11 +177,11 @@ exports.login = (req, res, next) => {
 /* ------------------------- Retrieving Account Informations ------------------------- */
 
 exports.getUser = (req, res, next) => {
-    connection.connect(function (error) {
+    connection.getConnection(function (error) {
         if (error) throw error;
         const userId = req.body.id;
         connection.query(
-            `SELECT * FROM Users;`,
+            `SELECT * FROM Users WHERE id=36;`,
             function (error, response, fields) {
                 if (error) {
                     res.status(404).json({
@@ -177,7 +189,7 @@ exports.getUser = (req, res, next) => {
                     })
                 };
                 return res.status(200).json({
-                    message: response
+                    response
                 })
             });
     })
@@ -186,7 +198,7 @@ exports.getUser = (req, res, next) => {
 /* ------------------------- Delete Account ------------------------- */
 
 exports.deleteUser = (req, res, next) => {
-    connection.connect(function (error) {
+    connection.getConnection(function (error) {
         const userId = req.params.id;
         connection.query(
             `DELETE FROM Users WHERE id=${userId}`

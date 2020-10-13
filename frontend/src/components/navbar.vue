@@ -16,14 +16,9 @@
       <router-link to="/auth">
         <li class="item">Créer un compte</li>
       </router-link>
-      <li class="has-submenu">
-        Mon compte
-        <ul class="submenu">
-          <li class="subItem">Mes données</li>
-          <li class="subItem">Paramètres</li>
-          <li class="subItem">Déconnexion</li>
-        </ul>
-      </li>
+      <router-link to="/account">
+        <li>Mon compte</li>
+      </router-link>
     </ul>
   </nav>
 </template>
