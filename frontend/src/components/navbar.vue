@@ -4,8 +4,8 @@
   <nav>
     <ul>
       <li class="logo">
-        <router-link to="/">
-          <img src="../../images/navbarIcon.png" alt="Site Icon" />
+        <router-link to="/home">
+          <img src="../../images/navbarIco.png" alt="Site Icon" />
         </router-link>
       </li>
       <li class="item">
@@ -51,28 +51,29 @@ function toggleHideDisplay() {
 }
 
 nav {
-  background: #222;
+  background: #ffffff;
   padding: 5px 0 0 0;
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
-  box-shadow: 3px 0px 6px 7px;
+  box-shadow: 0.5px 0.5px 4px #fd2d01;
 }
 
 ul {
   display: flex;
   justify-content: space-around;
-  color: white;
   list-style-type: none;
 }
 
 li {
   cursor: pointer;
+  color: #fd2d01;
+  font-weight: bold;
+  justify-self: baseline;
 }
 
 a {
-  color: white;
   text-decoration: none;
 }
 

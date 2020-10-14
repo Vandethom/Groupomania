@@ -37,11 +37,6 @@ export default {
   data() {
     return {
       user: null,
-      name: "",
-      surname: "",
-      pseudonym: "",
-      password: "",
-      description: "",
     };
   },
   mounted() {
@@ -68,7 +63,7 @@ export default {
 
 <style>
 #account {
-  margin: 12vh 0 0 55vh;
+  margin: -28vh 0 0 45vh;
 }
 
 h1 {

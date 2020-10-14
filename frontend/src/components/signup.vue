@@ -110,10 +110,10 @@ export default {
 .signup {
   display: flex;
   flex-direction: column;
-  width: 60vh;
-  height: 120%;
-  margin: 12vh 0 0 72vh;
-  padding: 2vh 0 2vh 0;
+  width: 70vh;
+  height: 42vh;
+  margin: -29vh 0 0 60vh;
+  padding: 8vh 6vh 8vh 6vh;
   font-size: 80%;
   border: 2px solid orange;
   border-radius: 2px 25px;

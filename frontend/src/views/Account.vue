@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <Navbar />
-    <SideMenu />
     <AccountView />
     <!--    <div id="nav">
       <router-link to="/">Home</router-link>|
@@ -13,14 +12,12 @@
 
 <script>
 import Navbar from "../components/navbar.vue";
-import SideMenu from "../components/sideMenu.vue";
 import AccountView from "../components/accountView.vue";
 
 export default {
   name: "App",
   components: {
     Navbar,
-    SideMenu,
     AccountView,
   },
   methods: {},

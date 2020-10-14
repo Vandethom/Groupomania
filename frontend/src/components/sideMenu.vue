@@ -6,7 +6,9 @@
       <ul>
         <li>
           <i class="icons fas fa-user-circle"></i>
-          <a href="#">Mon compte</a>
+          <router-link to="Account">
+            <a href="#">Mon compte</a>
+          </router-link>
         </li>
         <li>
           <i class="icons fas fa-user-friends"></i>
@@ -41,24 +43,26 @@ export default {
   font-size: 16px;
 }
 
+section {
+  width: 30vh;
+}
+
 a {
   text-decoration: none;
-  color: rgb(243, 242, 237);
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+nav {
+  margin: 8vh 0 0 20vh;
 }
 
 ul {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  left: 20vh;
-  top: 7vh;
   list-style-type: none;
-  box-shadow: 10px 7px 8px rgb(97, 92, 92);
-  background-color: rgb(54, 45, 45);
-
-  color: rgb(243, 242, 237);
-  width: 25vh;
-  height: 90vh;
+  background: #f0f2f5;
 }
 
 .icons {
@@ -66,6 +70,8 @@ ul {
 }
 
 li {
+  display: flex;
+  align-content: space-around;
   margin: 12px 0 22px 0;
 }
 </style>
