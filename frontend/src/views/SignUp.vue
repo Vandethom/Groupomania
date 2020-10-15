@@ -11,7 +11,7 @@ import Navbar from "../components/navbar.vue";
 import SignUp from "../components/signup.vue";
 
 export default {
-  name: "authentication",
+  name: "CreateAccount",
   components: {
     Navbar,
     SignUp,

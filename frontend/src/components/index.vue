@@ -9,7 +9,9 @@
         placeholder="Qu'avez-vous à dire aujourd'hui?"
       ></textarea>
     </div>
-    <div class="existingPosts" v-for="item in posts"></div>
+    <div class="displayPost" v-for="item in posts" v-bind:key="item.body">
+      <p>{{ item.body }}</p>
+    </div>
   </div>
 </template>
 
@@ -31,7 +33,7 @@ export default {
         },
       })
       .then((response) => {
-        this.posts = response.data;
+        this.posts = response.data.response;
         console.log(this.posts);
       })
       .catch(function (error) {
@@ -53,6 +55,16 @@ body {
   background: white;
   width: 45%;
   margin: -40vh 0 0 58vh;
+  padding: 10px 10px 10px 10px;
+  border: 1px solid gray;
+  border-radius: 15px;
+  box-shadow: 1px 1px 3px gray, -1px -1px 3px gray;
+}
+
+.displayPost {
+  background: white;
+  width: 45%;
+  margin: 3vh 0 0 58vh;
   padding: 10px 10px 10px 10px;
   border: 1px solid gray;
   border-radius: 15px;

@@ -12,8 +12,10 @@
         <i class="fas fa-search"></i>
         <input class="searchBar" type="text" placeholder="Search" />
       </li>
-      <li class="item">Se connecter</li>
-      <router-link to="/auth">
+      <router-link to="/authentication">
+        <li class="item">Se connecter</li>
+      </router-link>
+      <router-link to="/createAccount">
         <li class="item">Créer un compte</li>
       </router-link>
       <router-link to="/account">
@@ -88,8 +90,15 @@ img {
 }
 
 .searchBar {
-  line-height: 3vh;
+  border: none;
+  background: #e8f0fe;
+  line-height: 4vh;
   width: 500px;
+  padding-left: 5px;
   border-radius: 6px 6px;
+}
+
+.fa-search {
+  margin-right: 4px;
 }
 </style>

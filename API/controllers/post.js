@@ -28,13 +28,7 @@ const connection = mysql.createPool({
 exports.createPost = (req, res, next) => {
     connection.getConnection(function (error) {
         const body = req.body.body;
-        // const image = req.body.image;
         const userId = req.body.userId;
-        /*        const post = `(
-                 '${body}',
-                 LOAD_FILE('${image}'),
-                 '${userId}')`;
-        */
         const post = `(
             '${body}',
             '${userId}'
@@ -42,9 +36,9 @@ exports.createPost = (req, res, next) => {
         const sql =
             `INSERT INTO Posts (body, userId) VALUES ${post}`;
 
-        connection.getConnection(sql, function (error, response) {
+        connection.query(sql, function (error, response) {
             if (error) {
-                res.status(403).json({
+                return res.status(403).json({
                     error: `Remplissez correctement tous les champs avant d'envoyer votre requête.`
                 });
             }
@@ -70,7 +64,7 @@ exports.getAllPosts = (req, res, next) => {
                     })
                 }
                 res.status(200).json({
-                    message: `Voici la liste des articles existants : ` + JSON.stringify(response)
+                    response
                 })
             }
         )
