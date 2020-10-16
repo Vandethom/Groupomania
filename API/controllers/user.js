@@ -76,7 +76,6 @@ exports.signup = (req, res, next) => {
                 const surname = req.body.surname;
                 const pseudonym = req.body.pseudonym;
                 const password = hash;
-                const gender = req.body.gender;
                 const email = maskEmail(req.body.email);
                 const description = req.body.description;
                 const user = `
@@ -84,11 +83,10 @@ exports.signup = (req, res, next) => {
                  '${surname}',
                   '${pseudonym}',
                    '${password}',
-                    '${gender}',
                      '${email}',
                       '${description}')`;
                 const sql =
-                    `INSERT INTO Users (name, surname, pseudonym, password, gender, email, description) VALUES ${user}`;
+                    `INSERT INTO Users (name, surname, pseudonym, password, email, description) VALUES ${user}`;
                 connection.query(sql, function (error, result) {
                     if (error) {
                         res.status(403).json({
@@ -115,13 +113,13 @@ exports.login = (req, res, next) => {
         const password = req.body.password;
 
         connection.query(
-            `SELECT * FROM Users WHERE email=${email};`,
+            `SELECT * FROM Users WHERE email='${email}';`,
             function (error, response, fields) {
                 if (error) {
                     throw error;
                 }
                 bcrypt
-                    .compare(req.body.password, user.password)
+                    .compare(password, response.password)
                     .then((valid) => {
                         if (!valid) {
                             return res.status(401).json({
@@ -137,6 +135,9 @@ exports.login = (req, res, next) => {
                             })
                         })
                     })
+                    .catch(error => res.status(404).json({
+                        error: 'Remplissez correctement tous les champs.'
+                    }))
             });
     })
 }
