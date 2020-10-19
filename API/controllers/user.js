@@ -119,7 +119,8 @@ exports.login = (req, res, next) => {
                     throw error;
                 }
                 bcrypt
-                    .compare(password, response.password)
+                    .compare(password, response[0].password)
+                    // Ca bugg
                     .then((valid) => {
                         if (!valid) {
                             return res.status(401).json({
@@ -127,15 +128,16 @@ exports.login = (req, res, next) => {
                             });
                         }
                         res.status(200).json({
-                            userId: user._id,
+                            userId: response[0]._id,
                             token: jwt.sign({
-                                userId: user._id
+                                userId: response[0]._id
                             }, process.env.token, {
                                 expiresIn: '24h'
                             })
                         })
                     })
-                    .catch(error => res.status(404).json({
+                    //Ca bugg plus
+                    .catch(error => res.status(401).json({
                         error: 'Remplissez correctement tous les champs.'
                     }))
             });
@@ -144,35 +146,30 @@ exports.login = (req, res, next) => {
 
 /*
 exports.login = (req, res, next) => {
-    User.findOne({ email: maskEmail(req.body.email) })
-        .then((valid) => {
+    User.findOne({
+        where: { email: req.body.email }
+    })
+        .then(user => {
             if (!user) {
-                return res.status(401).json({
-                    error: 'Utilisateur non trouvé'
-                })
+                return res.status(401).json({ error: 'Utilisateur non trouvé' })
             }
-            bcrypt
-                .compare(req.body.password, user.password)
-                .then((valid) => {
+            bcrypt.compare(req.body.password, user.password)
+                .then(valid => {
                     if (!valid) {
-                        return res.status(401).json({
-                            error: 'Mot de passe incorrect'
-                        });
+                        return res.status(401).json({ error: 'Mot de passé invalide' })
                     }
                     res.status(200).json({
                         userId: user._id,
-                        token: jwt.sign({ userId: user._id }, process.env.token, {
+                        token: jwt.sign({
+                            userId: user._id
+                        }, process.env.token, {
                             expiresIn: '24h'
                         })
                     })
                 })
-                .then(() => res.json({ token }))
-                .catch((error) => res.status(500).json({
-                    error: 'Vous devez entrer un email et un mot de passe valides pour vous connecter.'
-                })
-                );
+                .catch(error => res.status(500).json({ error }))
         })
-        .catch((error) => res.status(500).json({ error }));
+        .catch(error => res.status(500).json({ error }))
 };
 
 /* ------------------------- Retrieving Account Informations ------------------------- */
