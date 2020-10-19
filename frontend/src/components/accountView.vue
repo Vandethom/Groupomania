@@ -34,14 +34,16 @@
 import axios from "axios";
 
 export default {
+  name: "AccountView",
   data() {
     return {
       user: null,
     };
   },
   mounted() {
+    const userId = localStorage.getItem("userId");
     axios
-      .get("http://localhost:3000/api/auth/account", {
+      .get(`http://localhost:3000/api/auth/account/${userId}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -55,7 +57,6 @@ export default {
       });
     return JSON.stringify(this.datas);
   },
-  name: "Account",
   methods: {},
 };
 </script>

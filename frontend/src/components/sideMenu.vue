@@ -6,7 +6,7 @@
       <ul>
         <li>
           <i class="icons fas fa-user-circle"></i>
-          <router-link to="Account">
+          <router-link :to="{ name: 'Account', params: { userId: userId } }">
             <a href="#">Mon compte</a>
           </router-link>
         </li>

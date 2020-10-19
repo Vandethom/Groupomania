@@ -18,7 +18,7 @@
       <router-link to="/createAccount">
         <li class="item">Créer un compte</li>
       </router-link>
-      <router-link to="/account">
+      <router-link :to="{ name: 'Account', params: { userId: userId } }">
         <li>Mon compte</li>
       </router-link>
     </ul>
@@ -27,20 +27,27 @@
 
 
 <script>
+import jwt_decode from "jwt-decode";
+
 export default {
   name: "Navbar",
+  data() {
+    return {
+      userId: "",
+    };
+  },
+  methods: {
+    getToken() {
+      const token = localStorage.getItem("token");
+      const decoded = jwt_decode(token);
+      this.userId = decoded.userId;
+      localStorage.setItem("id", this.userId);
+    },
+  },
+  mounted() {
+    this.getToken();
+  },
 };
-/*
-toggleHideDisplay(submenu);
-
-function toggleHideDisplay() {
-  var x = document.getElementById("myDIV");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-} */
 </script>
 
 

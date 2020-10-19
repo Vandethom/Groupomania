@@ -120,7 +120,6 @@ exports.login = (req, res, next) => {
                 }
                 bcrypt
                     .compare(password, response[0].password)
-                    // Ca bugg
                     .then((valid) => {
                         if (!valid) {
                             return res.status(401).json({
@@ -128,49 +127,20 @@ exports.login = (req, res, next) => {
                             });
                         }
                         res.status(200).json({
-                            userId: response[0]._id,
+                            userId: response[0].id,
                             token: jwt.sign({
-                                userId: response[0]._id
+                                userId: response[0].id
                             }, process.env.token, {
                                 expiresIn: '24h'
                             })
                         })
                     })
-                    //Ca bugg plus
                     .catch(error => res.status(401).json({
                         error: 'Remplissez correctement tous les champs.'
                     }))
             });
     })
 }
-
-/*
-exports.login = (req, res, next) => {
-    User.findOne({
-        where: { email: req.body.email }
-    })
-        .then(user => {
-            if (!user) {
-                return res.status(401).json({ error: 'Utilisateur non trouvé' })
-            }
-            bcrypt.compare(req.body.password, user.password)
-                .then(valid => {
-                    if (!valid) {
-                        return res.status(401).json({ error: 'Mot de passé invalide' })
-                    }
-                    res.status(200).json({
-                        userId: user._id,
-                        token: jwt.sign({
-                            userId: user._id
-                        }, process.env.token, {
-                            expiresIn: '24h'
-                        })
-                    })
-                })
-                .catch(error => res.status(500).json({ error }))
-        })
-        .catch(error => res.status(500).json({ error }))
-};
 
 /* ------------------------- Retrieving Account Informations ------------------------- */
 
@@ -179,7 +149,7 @@ exports.getUser = (req, res, next) => {
         if (error) throw error;
         const userId = req.body.id;
         connection.query(
-            `SELECT * FROM Users WHERE id=37;`,
+            `SELECT * FROM Users WHERE id=${userId};`,
             function (error, response, fields) {
                 if (error) {
                     res.status(404).json({

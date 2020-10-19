@@ -43,7 +43,8 @@ export default {
           }
         )
         .then((response) => {
-          console.log(response.data);
+          console.log(response.data.token);
+          localStorage.setItem("token", response.data.token);
           window.location.href = "http://localhost:8080/?#/home";
         })
         .catch(function (error) {

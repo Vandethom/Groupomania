@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="Account">
     <Navbar />
     <AccountView />
     <!--    <div id="nav">
@@ -15,7 +15,7 @@ import Navbar from "../components/navbar.vue";
 import AccountView from "../components/accountView.vue";
 
 export default {
-  name: "App",
+  name: "Account",
   components: {
     Navbar,
     AccountView,
@@ -25,6 +25,10 @@ export default {
 </script>
 
 <style>
+body {
+  background: #f0f2f5;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
