@@ -154,9 +154,6 @@ export default {
   border-radius: 5px;
 }
 
-form {
-}
-
 .signUpInput {
   background: #e8f0fe;
   margin-bottom: 2vh;
@@ -203,6 +200,5 @@ form {
 .descriptionInput {
   height: 100px;
   margin: auto;
-  padding: ;
 }
 </style>

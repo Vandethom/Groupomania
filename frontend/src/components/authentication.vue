@@ -3,7 +3,8 @@
     <form action="">
       <input class="authInput" id="email" type="text" /><br />
       <input class="authInput" id="password" type="password" /><br />
-      <button class="signInButton">Me connecter</button><br />
+      <button v-on:click="login" class="signInButton">Me connecter</button
+      ><br />
       <a class="forgottenId" href="">Indentifiants oubliés?</a><br />
       <span class="line"></span>
       <router-link to="/createAccount">
@@ -14,9 +15,42 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Authentication",
-  data() {},
+  data() {
+    return {
+      email: document.getElementById("email").value,
+      password: document.getElementById("password").value,
+    };
+  },
+  methods: {
+    login() {
+      let token = "";
+      axios
+        .post(
+          "http://localhost:3000/api/auth/login",
+          {
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+          window.location.href = "http://localhost:8080/?#/home";
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+  },
 };
 </script>
 
