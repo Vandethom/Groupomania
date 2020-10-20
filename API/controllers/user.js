@@ -24,14 +24,6 @@ const connection = mysql.createPool({
     database: 'groupomania'
 });
 
-
-/*var connection = mysql.createConnection({ //createPool
-    host: "localhost",
-    user: "root",
-    password: process.env.MySQLPassword,
-    database: "groupomania"
-});
-
 /*const connection = new Sequelize('groupomania', 'root', process.env.MySQLPassword, {
     host: 'localhost',
     dialect: 'mysql'
@@ -143,7 +135,7 @@ exports.login = (req, res, next) => {
 }
 
 /* ------------------------- Retrieving Account Informations ------------------------- */
-
+/*
 exports.getUser = (req, res, next) => {
     connection.getConnection(function (error) {
         if (error) throw error;
@@ -160,6 +152,20 @@ exports.getUser = (req, res, next) => {
                     response
                 })
             });
+    })
+}
+*/
+exports.getUser = (req, res, next) => {
+    connection.getConnection(function (error) {
+        console.log(req.params.id)
+        connection.query(
+            'SELECT * FROM Users WHERE id=?', req.params.id, (error, results) => {
+                if (error) {
+                    return res.status(400).json(error)
+                }
+                return res.status(200).json(results)
+            }
+        )
     })
 }
 

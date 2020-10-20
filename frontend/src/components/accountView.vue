@@ -41,7 +41,7 @@ export default {
     };
   },
   mounted() {
-    const userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem("id");
     axios
       .get(`http://localhost:3000/api/auth/account/${userId}`, {
         headers: {
@@ -49,7 +49,7 @@ export default {
         },
       })
       .then((response) => {
-        this.user = response.data.response[0];
+        this.user = response.data[0];
         console.log(this.user);
       })
       .catch(function (error) {
