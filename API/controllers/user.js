@@ -119,6 +119,7 @@ exports.login = (req, res, next) => {
                             });
                         }
                         res.status(200).json({
+                            userPseudonym: response[0].pseudonym,
                             userId: response[0].id,
                             token: jwt.sign({
                                 userId: response[0].id

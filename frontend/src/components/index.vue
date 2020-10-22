@@ -1,13 +1,16 @@
 <template>
   <div id="home">
     <div class="postContainer">
-      <textarea
-        name="post"
-        id="postZone"
-        cols="80"
-        rows="10"
-        placeholder="Qu'avez-vous à dire aujourd'hui?"
-      ></textarea>
+      <form method="POST">
+        <input id="postContent" class="postForm" type="text" />
+        <input
+          class="formButton"
+          type="submit"
+          value="Envoyer !"
+          v-on:click="sendPost"
+        />
+        <button v-on:click="sendPost">Envoyer !</button>
+      </form>
     </div>
     <div class="displayPost" v-for="item in posts" v-bind:key="item.body">
       <p class="userPseudonym">{{ item.userPseudonym }}:</p>
@@ -25,6 +28,32 @@ export default {
     return {
       posts: null,
     };
+  },
+  methods: {
+    sendPost() {
+      let token = "";
+      axios
+        .post(
+          "http://localhost:3000/api",
+          {
+            body: document.getElementById("postContent").value,
+            userPseudonym: localStorage.getItem("userPseudonym"),
+          },
+          {
+            header: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+          //refresh window.location
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
   },
   mounted() {
     axios
@@ -60,6 +89,23 @@ body {
   border: 1px solid gray;
   border-radius: 15px;
   box-shadow: 1px 1px 3px gray, -1px -1px 3px gray;
+}
+
+.postForm {
+  background: #f0f2f5;
+  width: 80%;
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+}
+
+.formButton {
+  background: #51f032;
+  border: none;
+  border-radius: 10px;
+  width: 75px;
+  height: 30px;
+  margin-left: 2vh;
 }
 
 .displayPost {
