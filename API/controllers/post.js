@@ -28,13 +28,14 @@ const connection = mysql.createPool({
 exports.createPost = (req, res, next) => {
     connection.getConnection(function (error) {
         const body = req.body.body;
-        const userId = req.body.userId;
+        const userPseudonym = req.body.userPseudonym;
         const post = `(
-            '${body}',
-            '${userId}'
+            "${body}",
+            "${userPseudonym}"
         )`;
+        console.log(post)
         const sql =
-            `INSERT INTO Posts (body, userId) VALUES ${post}`;
+            `INSERT INTO Posts (body, userPseudonym) VALUES ${post}`;
 
         connection.query(sql, function (error, response) {
             if (error) {
@@ -54,6 +55,7 @@ exports.createPost = (req, res, next) => {
 exports.getAllPosts = (req, res, next) => {
     connection.getConnection(function (error) {
         const postId = req.body.id;
+        const userId = req.params.userId;
 
         connection.query(
             `SELECT * FROM Posts;`,
@@ -71,22 +73,50 @@ exports.getAllPosts = (req, res, next) => {
     })
 };
 
+/* ------------------------- Get Post's User's name ------------------------- */
+/*
+exports.getPostsUser = (req, res, next) => {
+    const userId = req.params.userId;
+    const mySQL2 =
+        `USE groupomania;
+    SELECT Users.name
+    FROM Users
+    Inner JOIN Posts
+    ON Posts.userId
+    WHERE Posts.userId =35yy;`
+
+    connection.query(
+        mySQL2, function (error, response, fields) {
+            if (error) {
+                res.status(500).json({
+                    error: `Une erreur s'est produite lors du chargement de l'utilisateur. Assurez-vous de chercher un utilisateur existant.`
+                })
+            }
+            res.status(200).json({
+                response
+            })
+        })
+}
+
+
 /* ------------------------- Get one post ------------------------- */
 
 exports.getOnePost = (req, res, next) => {
     connection.getConnection(function (error) {
         const postId = req.params.id;
+        const userId = req.params.userId;
+
+        const mySQL = `SELECT * FROM Posts WHERE id=${postId}`
 
         connection.query(
-            `SELECT * FROM Posts WHERE id=${postId}`,
-            function (error, response, fields) {
+            mySQL, function (error, response, fields) {
                 if (error) {
                     res.status(404).json({
                         error: `La page que vous recherchez n'existe pas, tentez à nouveau avec une recherche correcte.`
                     })
                 };
                 res.status(200).json({
-                    message: `Voici les résultats recherchés : ` + response
+                    response
                 });
             }
         );
@@ -126,3 +156,16 @@ exports.deletePost = (req, res, next) => {
 exports.likePost = (req, res, next) => {
 
 };
+
+
+/*
+SQL Request to display name of user posting
+
+`USE groupomania;
+SELECT Users.name
+FROM Users
+Inner JOIN Posts
+ON Posts.userId
+WHERE Posts.userId =${userId};`
+
+*/

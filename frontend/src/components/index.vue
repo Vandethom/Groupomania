@@ -10,7 +10,8 @@
       ></textarea>
     </div>
     <div class="displayPost" v-for="item in posts" v-bind:key="item.body">
-      <p>{{ item.body }}</p>
+      <p class="userPseudonym">{{ item.userPseudonym }}:</p>
+      <p class="postBody">{{ item.body }}</p>
     </div>
   </div>
 </template>
@@ -62,6 +63,7 @@ body {
 }
 
 .displayPost {
+  display: flex;
   background: white;
   width: 45%;
   margin: 3vh 0 0 58vh;
@@ -77,6 +79,12 @@ textarea {
   padding: 9px 9px 9px 9px;
 }
 
-.home {
+.userPseudonym {
+  font-weight: bold;
+  margin-right: 2.5vh;
+}
+
+.postBody {
+  text-align: justify;
 }
 </style>

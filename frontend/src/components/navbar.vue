@@ -4,7 +4,7 @@
   <nav>
     <ul>
       <li class="logo">
-        <router-link to="/home">
+        <router-link to="/">
           <img src="../../images/navbarIco.png" alt="Site Icon" />
         </router-link>
       </li>

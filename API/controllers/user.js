@@ -35,14 +35,14 @@ const connection = mysql.createPool({
 function maskEmail(email) {
     // function used with signUp and signIn in order to replace characters with '*'
     function mask(str) {
-        if (str.length > 4) {
+        if (str.length > 4) { // if mail is longer than 4 characters, replaces all but the first one
             return (
                 str.substr(0, 1) +
                 str.substr(1, str.length - 1).replace(/\w/g, "*") +
                 str.substr(-1, 1)
             );
         }
-        return str.replace(/\w/g, "*");
+        return str.replace(/\w/g, "*"); // else, replaces all by stars (*)
     }
     return email.replace(/([\w.]+)@([\w.]+)(\.[\w.]+)/g, function (
         m,
