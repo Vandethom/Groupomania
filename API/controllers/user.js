@@ -136,26 +136,7 @@ exports.login = (req, res, next) => {
 }
 
 /* ------------------------- Retrieving Account Informations ------------------------- */
-/*
-exports.getUser = (req, res, next) => {
-    connection.getConnection(function (error) {
-        if (error) throw error;
-        const userId = req.body.id;
-        connection.query(
-            `SELECT * FROM Users WHERE id=${userId};`,
-            function (error, response, fields) {
-                if (error) {
-                    res.status(404).json({
-                        error: `L'utilisateur que vous cherchez n'existe pas, tentez une reconnexion pour résoudre ce problème.`
-                    })
-                };
-                return res.status(200).json({
-                    response
-                })
-            });
-    })
-}
-*/
+
 exports.getUser = (req, res, next) => {
     connection.getConnection(function (error) {
         console.log(req.params.id)

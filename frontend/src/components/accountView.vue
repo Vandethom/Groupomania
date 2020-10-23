@@ -4,27 +4,29 @@
     <div class="category name">
       <p class="categoryDefiner">Prénom</p>
       <p class="info namePlace">{{ user.name }}</p>
-      <p class="modifier">Modifier</p>
     </div>
     <div class="category surname">
       <p class="categoryDefiner">Nom</p>
       <p class="info surnamePlace">{{ user.surname }}</p>
-      <p class="modifier">Modifier</p>
     </div>
     <div class="category pseudonym">
       <p class="categoryDefiner">Pseudonyme</p>
       <p class="info pseudonymPlace">{{ user.pseudonym }}</p>
-      <p class="modifier">Modifier</p>
     </div>
     <div class="category password">
       <p class="categoryDefiner">Mot de passe</p>
       <p class="info passwordPlace">********</p>
-      <p class="modifier">Modifier</p>
     </div>
     <div class="category description">
       <p class="categoryDefiner">description</p>
       <p class="info descriptionPlace">{{ user.description }}</p>
-      <p class="modifier">Modifier</p>
+    </div>
+    <div class="category modifications">
+      <p class="categoryDefiner">Modifications</p>
+      <p id="putMethod" class="modifier">Modifier mon compte</p>
+      <p id="deleteMethod" class="modifier" v-on:click="deleteUser">
+        Supprimer mon compte
+      </p>
     </div>
   </div>
 </template>
@@ -57,14 +59,43 @@ export default {
       });
     return JSON.stringify(this.datas);
   },
-  methods: {},
+  methods: {
+    deleteUser() {
+      const userId = localStorage.getItem("id");
+      axios
+        .delete(`http://localhost:3000/api/auth/account/${userId}`, {
+          header: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          localStorage.clear();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    putUser() {
+      const userId = localStorage.getItem("id");
+      axios.put(
+        `http://localhost:3000/api/auth/account/${userId}`,
+        {},
+        {
+          header: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    },
+  },
 };
 </script>
 
 
 <style>
 #account {
-  margin: -28vh 0 0 45vh;
+  margin: -28vh 0 0 52vh;
 }
 
 h1 {
@@ -76,7 +107,7 @@ h1 {
   justify-content: space-between;
   margin-bottom: 2.5vh;
   border-bottom: 1px solid black;
-  width: 90%;
+  width: 75%;
 }
 
 .categoryDefiner {

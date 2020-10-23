@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <div class="postContainer">
-      <form method="POST">
+      <form method="POST" v-on:submit.prevent>
         <input id="postContent" class="postForm" type="text" />
         <input
           class="formButton"
@@ -9,12 +9,13 @@
           value="Envoyer !"
           v-on:click="sendPost"
         />
-        <button v-on:click="sendPost">Envoyer !</button>
       </form>
     </div>
-    <div class="displayPost" v-for="item in posts" v-bind:key="item.body">
-      <p class="userPseudonym">{{ item.userPseudonym }}:</p>
-      <p class="postBody">{{ item.body }}</p>
+    <div class="postsList">
+      <div class="displayPost" v-for="item in posts" v-bind:key="item.body">
+        <p class="userPseudonym">{{ item.userPseudonym }}:</p>
+        <p class="postBody">{{ item.body }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -31,28 +32,36 @@ export default {
   },
   methods: {
     sendPost() {
+      const body = document.getElementById("postContent").value;
+      const userPseudonym = localStorage.getItem("userPseudonym");
       let token = "";
-      axios
-        .post(
-          "http://localhost:3000/api",
-          {
-            body: document.getElementById("postContent").value,
-            userPseudonym: localStorage.getItem("userPseudonym"),
-          },
-          {
-            header: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer${token}`,
+      if (!userPseudonym) {
+        alert("Assurez-vous d'être connecté avant de poster quoi que ce soit.");
+      } else if (!body) {
+        alert("Assurez vous d'entrer un message avant de le publier 😉 ");
+      } else {
+        axios
+          .post(
+            "http://localhost:3000/api",
+            {
+              body: document.getElementById("postContent").value,
+              userPseudonym: localStorage.getItem("userPseudonym"),
             },
-          }
-        )
-        .then((response) => {
-          console.log(response.data);
-          //refresh window.location
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+            {
+              header: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer${token}`,
+              },
+            }
+          )
+          .then((response) => {
+            console.log(response.data);
+            window.location.reload();
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     },
   },
   mounted() {
@@ -132,5 +141,10 @@ textarea {
 
 .postBody {
   text-align: justify;
+}
+
+.postsList {
+  display: flex;
+  flex-direction: column-reverse;
 }
 </style>
