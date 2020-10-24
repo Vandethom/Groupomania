@@ -169,3 +169,36 @@ exports.deleteUser = (req, res, next) => {
         })
     })
 }
+
+/* ------------------------- Update Account ------------------------- */
+
+exports.updateUser = (req, res, next) => {
+    connection.getConnection(function (error) {
+        bcrypt
+            .hash(req.body.password, 10)
+            .then((hash) => {
+                const name = req.body.name;
+                const surname = req.body.surname;
+                const pseudonym = req.body.pseudonym;
+                const password = hash;
+                const email = req.body.email;
+                const description = req.body.description;
+                const id = req.params.id;
+
+                const sql =
+                    `UPDATE Users SET name='${name}', surname='${surname}', pseudonym='${pseudonym}', password='${password}', email='${email}', description='${description}' WHERE id=51;`
+
+                connection.query(sql, function (error, result) {
+                    if (error) {
+                        res.status(403).json({
+                            error: `Veillez à modifier un utilisateur existant.`
+                        })
+                    };
+                    return res.status(201).json({
+                        message: `L'utilisateur a été modifié.`
+                    })
+                });
+            })
+            .catch((error) => res.status(500).json({ error: "Ein error !" }));
+    })
+}
