@@ -1,20 +1,20 @@
 <template>
   <div id="Account">
     <Navbar />
-    <AccountView />
+    <ModifyAccount />
     <router-view />
   </div>
 </template>
 
 <script>
 import Navbar from "../components/navbar.vue";
-import AccountView from "../components/accountView.vue";
+import ModifyAccount from "../components/modifyAccount.vue";
 
 export default {
-  name: "Account",
+  name: "AccountOnChange",
   components: {
     Navbar,
-    AccountView,
+    ModifyAccount,
   },
   methods: {},
 };

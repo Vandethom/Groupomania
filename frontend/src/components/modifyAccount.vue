@@ -3,29 +3,30 @@
     <h1>Informations générales du compte</h1>
     <div class="category name">
       <p class="categoryDefiner">Prénom</p>
-      <p class="info namePlace">{{ user.name }}</p>
+      <input type="text" id="name" class="modifyInput" />
     </div>
     <div class="category surname">
       <p class="categoryDefiner">Nom</p>
-      <p class="info surnamePlace">{{ user.surname }}</p>
+      <input type="text" id="surname" class="modifyInput" />
     </div>
     <div class="category pseudonym">
       <p class="categoryDefiner">Pseudonyme</p>
-      <p class="info pseudonymPlace">{{ user.pseudonym }}</p>
+      <input type="text" id="pseudonym" class="modifyInput" />
+    </div>
+    <div class="category email">
+      <p class="categoryDefiner">Email</p>
+      <input type="text" id="email" class="modifyInput" />
     </div>
     <div class="category password">
       <p class="categoryDefiner">Mot de passe</p>
-      <p class="info passwordPlace">********</p>
+      <input type="password" id="password" class="modifyInput" />
     </div>
     <div class="category description">
       <p class="categoryDefiner">description</p>
-      <p class="info descriptionPlace">{{ user.description }}</p>
+      <input type="text" id="description" class="modifyInput" />
     </div>
     <div class="category modifications">
-      <p class="categoryDefiner">Modifications</p>
-      <router-link to="/account_modify">
-        <p id="putMethod" class="modifier">Modifier mon compte</p>
-      </router-link>
+      <p id="changeAccount" v-on:click="putUser">Modifier mes informations</p>
       <p id="deleteMethod" class="modifier" v-on:click="deleteUser">
         Supprimer mon compte
       </p>
@@ -55,6 +56,20 @@ export default {
       .then((response) => {
         this.user = response.data[0];
         console.log(this.user);
+        document.getElementById("name").setAttribute("value", this.user.name);
+        document
+          .getElementById("surname")
+          .setAttribute("value", this.user.surname);
+        document
+          .getElementById("pseudonym")
+          .setAttribute("value", this.user.pseudonym);
+        document.getElementById("email").setAttribute("value", this.user.email);
+        document
+          .getElementById("password")
+          .setAttribute("value", this.user.password);
+        document
+          .getElementById("description")
+          .setAttribute("value", this.user.description);
       })
       .catch(function (error) {
         console.log(error);
@@ -78,6 +93,27 @@ export default {
           console.log(error);
         });
     },
+    putUser() {
+      const userId = localStorage.getItem("id");
+      axios
+        .put(
+          `http://localhost:3000/api/auth/account/${userId}`,
+          {
+            name: document.getElementById("name").value,
+            surname: document.getElementById("surname").value,
+            pseudonym: document.getElementById("pseudonym").value,
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value,
+            description: document.getElementById("description").value,
+          },
+          {
+            header: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((window.location.href = "http://localhost:8080/#/account"));
+    },
   },
 };
 </script>
@@ -90,6 +126,14 @@ export default {
 
 h1 {
   margin: 0 18vh 8.5vh 0;
+}
+
+.modifyInput {
+  background: #d6c6c6;
+  width: 80%;
+  height: 45px;
+  border: none;
+  border-radius: 10px;
 }
 
 .category {
@@ -106,6 +150,11 @@ h1 {
 
 .info {
   color: gray;
+}
+
+#changeAccount {
+  cursor: pointer;
+  color: blue;
 }
 
 .modifier {
