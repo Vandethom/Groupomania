@@ -181,7 +181,7 @@ exports.updateUser = (req, res, next) => {
                 const surname = req.body.surname;
                 const pseudonym = req.body.pseudonym;
                 const password = hash;
-                const email = req.body.email;
+                const email = maskEmail(req.body.email);
                 const description = req.body.description;
                 const id = req.params.id;
 

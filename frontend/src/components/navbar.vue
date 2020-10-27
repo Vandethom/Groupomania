@@ -18,9 +18,7 @@
       <router-link to="/createAccount">
         <li class="item">Créer un compte</li>
       </router-link>
-      <router-link :to="{ name: 'Account', params: { userId: userId } }">
-        <li>Mon compte</li>
-      </router-link>
+      <li class="item" v-on:click="disconnect">Déconnexion</li>
     </ul>
   </nav>
 </template>
@@ -43,6 +41,11 @@ export default {
       this.userId = decoded.userId;
       localStorage.setItem("id", this.userId);
     },
+  },
+  disconnect() {
+    console.log("anything");
+    alert("smthing");
+    localStorage.clear();
   },
   mounted() {
     this.getToken();

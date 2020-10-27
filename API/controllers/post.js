@@ -29,13 +29,15 @@ exports.createPost = (req, res, next) => {
     connection.getConnection(function (error) {
         const body = req.body.body;
         const userPseudonym = req.body.userPseudonym;
+        const image = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         const post = `(
             "${body}",
-            "${userPseudonym}"
+            "${userPseudonym}",
+            "${image}"
         )`;
         console.log(post)
         const sql =
-            `INSERT INTO Posts (body, userPseudonym) VALUES ${post}`;
+            `INSERT INTO Posts (body, userPseudonym, image) VALUES ${post}`;
 
         connection.query(sql, function (error, response) {
             if (error) {
@@ -72,32 +74,6 @@ exports.getAllPosts = (req, res, next) => {
         )
     })
 };
-
-/* ------------------------- Get Post's User's name ------------------------- */
-/*
-exports.getPostsUser = (req, res, next) => {
-    const userId = req.params.userId;
-    const mySQL2 =
-        `USE groupomania;
-    SELECT Users.name
-    FROM Users
-    Inner JOIN Posts
-    ON Posts.userId
-    WHERE Posts.userId =35yy;`
-
-    connection.query(
-        mySQL2, function (error, response, fields) {
-            if (error) {
-                res.status(500).json({
-                    error: `Une erreur s'est produite lors du chargement de l'utilisateur. Assurez-vous de chercher un utilisateur existant.`
-                })
-            }
-            res.status(200).json({
-                response
-            })
-        })
-}
-
 
 /* ------------------------- Get one post ------------------------- */
 
@@ -150,22 +126,3 @@ exports.deletePost = (req, res, next) => {
         );
     });
 };
-
-/* ------------------------- Like a post ------------------------- */
-
-exports.likePost = (req, res, next) => {
-
-};
-
-
-/*
-SQL Request to display name of user posting
-
-`USE groupomania;
-SELECT Users.name
-FROM Users
-Inner JOIN Posts
-ON Posts.userId
-WHERE Posts.userId =${userId};`
-
-*/
