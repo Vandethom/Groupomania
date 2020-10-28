@@ -10,9 +10,19 @@
           alt="image postée par utilisateur"
         />
         <p class="postBody">{{ post.body }}</p>
+        <div class="commentsList">
+          <div
+            class="displayComment"
+            v-for="item in comments"
+            v-bind:key="item.commentBody"
+          >
+            <p class="userPseudonym">{{ item.commentUserPseudonym }}:</p>
+            <p class="postBody">{{ item.commentBody }}</p>
+          </div>
+        </div>
         <div>
-          <form @submit.prevent="sendPost" enctype="multipart/form-data">
-            <input id="postContent" class="postForm" type="text" />
+          <form @submit.prevent="sendComment" enctype="multipart/form-data">
+            <input id="commentContent" class="postForm" type="text" />
             <input class="formButton" type="submit" value="Envoyer !" />
           </form>
         </div>
@@ -29,6 +39,7 @@ export default {
   data() {
     return {
       post: null,
+      comments: null,
     };
   },
   mounted() {
@@ -48,9 +59,38 @@ export default {
       .catch(function (error) {
         console.log(error);
       });
+
+    axios
+      .get(`http://localhost:3000/api/${postId}/comments`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log("anything");
+        this.comments = response.data.response;
+        console.log(this.comments);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   },
   methods: {
-    sendComment() {},
+    sendComment() {
+      const postId = this.$route.params.id;
+      axios
+        .post(`http://localhost:3000/api/comment/${postId}`, {
+          commentBody: document.getElementById("commentContent").value,
+          commentUserPseudonym: localStorage.getItem("userPseudonym"),
+        })
+        .then((response) => {
+          console.log(response.data);
+          window.location.reload();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
@@ -72,15 +112,42 @@ body {
   box-shadow: 1px 1px 3px gray, -1px -1px 3px gray;
 }
 
+.displayComment {
+  border: 0.5px solid black;
+  border-radius: 15px;
+  margin-bottom: 1vh;
+  padding: 0 0.7vh 0 0.7vh;
+}
+
+#commentContent {
+  background: #f0f2f5;
+  width: 80%;
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+}
+
 .userPseudonym {
   align-self: flex-start;
   font-weight: bold;
   margin-right: 2.5vh;
 }
 
+.formButton {
+  background: #51f032;
+  border: none;
+  border-radius: 10px;
+  width: 75px;
+  height: 30px;
+  margin-top: 1vh;
+  margin-left: 2vh;
+  color: white;
+  font-weight: bold;
+}
+
 .postImage {
   align-self: center;
-  max-width: 300px;
+  max-width: 100%;
   max-height: 300px;
 }
 

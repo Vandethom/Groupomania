@@ -133,17 +133,16 @@ exports.createComment = (req, res, next) => {
     connection.getConnection(function (error) {
         const postId = req.params.id;
 
-        const body = req.body.body;
-        const userPseudonym = req.body.userPseudonym;
-        //const image = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+        const commentBody = req.body.commentBody;
+        const commentUserPseudonym = req.body.commentUserPseudonym;
         const comment = `(
-        "${body}",
-        "${userPseudonym}",
+        "${commentBody}",
+        "${commentUserPseudonym}",
         "${postId}"
         )`;
         console.log(comment)
         const sql =
-            `INSERT INTO Comments (body, userPseudonym, postId) 
+            `INSERT INTO Comments (commentBody, commentUserPseudonym, postId) 
         VALUES ${comment};`
 
         connection.query(sql, function (error, response, fields) {
