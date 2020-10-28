@@ -3,8 +3,8 @@
     <div class="postContainer">
       <form @submit.prevent="sendPost" enctype="multipart/form-data">
         <input id="postContent" class="postForm" type="text" />
-        <i class="far fa-images"></i
-        ><input
+        <label for="toPostImage"><i class="far fa-images"></i></label>
+        <input
           v-on:change="handleFileUpload"
           type="file"
           ref="image"
@@ -24,6 +24,12 @@
           alt="image postée par utilisateur"
         />
         <p class="postBody">{{ item.body }}</p>
+        <div>
+          <button class="responseButton">Commenter</button>
+          <router-link :to="`/post/${item.postId}`">
+            <button class="viewCommentsButton">Réponses</button>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -130,7 +136,10 @@ body {
   border-radius: 10px;
   width: 75px;
   height: 30px;
+  margin-top: 1vh;
   margin-left: 2vh;
+  color: white;
+  font-weight: bold;
 }
 
 .displayPost {
@@ -168,8 +177,47 @@ textarea {
   max-height: 300px;
 }
 
+#toPostImage {
+  border: none;
+  border-radius: 10px;
+  background: rgb(231, 140, 21);
+  width: 50%;
+}
+
 .postsList {
   display: flex;
   flex-direction: column-reverse;
+}
+
+.underline {
+  display: block;
+  border-bottom: 2px solid #dadde1;
+  width: 185px;
+  margin: auto;
+  margin-top: 1.5vh;
+  margin-bottom: 2vh;
+}
+
+.responseButton {
+  width: 150px;
+  height: 30px;
+  align-self: center;
+  border: none;
+  border-radius: 15px;
+  background: rgb(231, 140, 21);
+  color: white;
+  font-weight: bold;
+}
+
+.viewCommentsButton {
+  width: 150px;
+  height: 30px;
+  align-self: center;
+  border: none;
+  border-radius: 15px;
+  background: rgb(186, 231, 21);
+  color: white;
+  margin-left: 1.5vh;
+  font-weight: bold;
 }
 </style>
