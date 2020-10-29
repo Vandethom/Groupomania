@@ -176,4 +176,12 @@ body {
   text-align: center;
   align-self: center;
 }
+
+@media only screen and (max-width: 600px) {
+  .post {
+    margin: auto;
+    margin-top: 20vh;
+    width: 275px;
+  }
+}
 </style>

@@ -79,4 +79,10 @@ li {
   align-content: space-around;
   margin: 12px 0 22px 0;
 }
+
+@media only screen and (max-width: 600px) {
+  * {
+    display: none;
+  }
+}
 </style>

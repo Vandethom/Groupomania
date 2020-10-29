@@ -219,4 +219,22 @@ textarea {
   margin-left: 1.5vh;
   font-weight: bold;
 }
+
+@media only screen and (max-width: 600px) {
+  .postContainer {
+    width: 275px;
+    margin: auto;
+    margin-bottom: 2vh;
+    padding: 10px 10px 10px 10px;
+    border: 1px solid gray;
+    border-radius: 15px;
+    box-shadow: 1px 1px 3px gray, -1px -1px 3px gray;
+  }
+
+  .displayPost {
+    margin: auto;
+    margin-bottom: 2vh;
+    width: 275px;
+  }
+}
 </style>

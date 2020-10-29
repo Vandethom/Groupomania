@@ -126,6 +126,9 @@ export default {
 
 
 <style>
+body {
+  background: #f0f2f5;
+}
 .signup {
   background: white;
   display: flex;
@@ -200,5 +203,21 @@ export default {
 .descriptionInput {
   height: 100px;
   margin: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .signup {
+    margin: auto;
+    margin-top: 18vh;
+    width: 36vh;
+  }
+
+  .signUpInput {
+    width: 200px;
+  }
+
+  .separateLine {
+    width: 30vh;
+  }
 }
 </style>

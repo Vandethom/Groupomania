@@ -8,17 +8,22 @@
           <img src="../../images/navbarIco.png" alt="Site Icon" />
         </router-link>
       </li>
-      <li class="item">
+      <!--<li class="item">
         <i class="fas fa-search"></i>
         <input class="searchBar" type="text" placeholder="Search" />
-      </li>
+      </li>-->
       <router-link to="/authentication">
-        <li class="item">Se connecter</li>
+        <i class="icon fas fa-sign-in-alt"></i>
+        <li class="item connectItem">Se connecter</li>
       </router-link>
       <router-link to="/createAccount">
-        <li class="item">Créer un compte</li>
+        <i class="icon fas fa-user-plus"></i>
+        <li class="item signUpItem">Créer un compte</li>
       </router-link>
-      <li class="item" v-on:click="disconnect">Déconnexion</li>
+      <div>
+        <i class="icon fas fa-sign-out-alt" @click="disconnect"></i>
+        <li class="item disconnectItem" v-on:click="disconnect">Déconnexion</li>
+      </div>
     </ul>
   </nav>
 </template>
@@ -111,5 +116,28 @@ img {
 
 .fa-search {
   margin-right: 4px;
+}
+
+@media only screen and (max-width: 600px) {
+  ul {
+    display: flex;
+    flex-direction: row;
+  }
+  .connectItem,
+  .signUpItem,
+  .disconnectItem {
+    visibility: hidden;
+  }
+
+  .icon {
+    margin: 25px 0 -20px 0;
+  }
+
+  .logo {
+    display: none;
+  }
+  nav {
+    background: white;
+  }
 }
 </style>

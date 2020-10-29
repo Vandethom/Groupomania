@@ -126,4 +126,12 @@ label {
   margin: auto;
   margin-top: 1.5vh;
 }
+
+@media only screen and (max-width: 600px) {
+  #authentication {
+    margin: auto;
+    margin-top: 20vh;
+    padding: 2vh 4vh 2vh 2vh;
+  }
+}
 </style>
