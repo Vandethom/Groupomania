@@ -48,6 +48,7 @@ export default {
       post: null,
       comments: null,
       user: null,
+      commentUser: null,
       storageUser: localStorage.getItem("userPseudonym"),
       postId: null,
     };
@@ -62,7 +63,6 @@ export default {
         },
       })
       .then((response) => {
-        console.log("anything");
         this.post = response.data.response[0];
         this.user = this.post.userPseudonym;
         this.postId = this.post.postId;

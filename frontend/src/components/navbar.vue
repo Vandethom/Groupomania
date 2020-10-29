@@ -41,12 +41,13 @@ export default {
       this.userId = decoded.userId;
       localStorage.setItem("id", this.userId);
     },
+    disconnect() {
+      console.log("anything");
+      alert("smthing");
+      localStorage.clear();
+    },
   },
-  disconnect() {
-    console.log("anything");
-    alert("smthing");
-    localStorage.clear();
-  },
+
   mounted() {
     this.getToken();
   },

@@ -31,6 +31,11 @@
 <script>
 export default {
   name: "SideMenu",
+  data() {
+    return {
+      userId: null,
+    };
+  },
 };
 </script>
 
