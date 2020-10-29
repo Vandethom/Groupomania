@@ -16,7 +16,7 @@
     </div>
     <div class="postsList">
       <div class="displayPost" v-for="item in posts" v-bind:key="item.body">
-        <p class="userPseudonym">{{ item.userPseudonym }}:</p>
+        <p id="pseudo" class="userPseudonym">{{ item.userPseudonym }}</p>
         <img
           class="postImage"
           v-if="item.image"
@@ -25,9 +25,8 @@
         />
         <p class="postBody">{{ item.body }}</p>
         <div>
-          <button class="responseButton">Commenter</button>
           <router-link :to="`/post/${item.postId}`">
-            <button class="viewCommentsButton">Réponses</button>
+            <button class="viewCommentsButton">Commentaires</button>
           </router-link>
         </div>
       </div>
@@ -198,7 +197,7 @@ textarea {
   margin-bottom: 2vh;
 }
 
-.responseButton {
+.deleteButton {
   width: 150px;
   height: 30px;
   align-self: center;

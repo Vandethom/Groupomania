@@ -25,6 +25,13 @@
             <input id="commentContent" class="postForm" type="text" />
             <input class="formButton" type="submit" value="Envoyer !" />
           </form>
+          <button
+            class="deleteButton"
+            @click="deletePost"
+            v-if="user == storageUser"
+          >
+            Button
+          </button>
         </div>
       </div>
     </div>
@@ -40,6 +47,9 @@ export default {
     return {
       post: null,
       comments: null,
+      user: null,
+      storageUser: localStorage.getItem("userPseudonym"),
+      postId: null,
     };
   },
   mounted() {
@@ -54,7 +64,8 @@ export default {
       .then((response) => {
         console.log("anything");
         this.post = response.data.response[0];
-        console.log(this.post);
+        this.user = this.post.userPseudonym;
+        this.postId = this.post.postId;
       })
       .catch(function (error) {
         console.log(error);
@@ -67,7 +78,6 @@ export default {
         },
       })
       .then((response) => {
-        console.log("anything");
         this.comments = response.data.response;
         console.log(this.comments);
       })
@@ -90,6 +100,17 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    deletePost() {
+      //const user = localStorage.getItem("userPseudonym");
+      //const postUser = this.user;
+      const postId = this.postId;
+      axios
+        .delete(`http://localhost:3000/api/${postId}`, {
+          headers: { "Content-Type": "application/json" },
+        })
+        .then((window.location.href = `http://localhost:8080/?#/`))
+        .catch((error) => console.log(error));
     },
   },
 };
