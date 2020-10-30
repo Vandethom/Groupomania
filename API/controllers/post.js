@@ -99,12 +99,6 @@ exports.getOnePost = (req, res, next) => {
     });
 };
 
-/* ------------------------- Update a post ------------------------- */
-
-exports.editPost = (req, res, next) => {
-
-};
-
 /* ------------------------- Delete a post ------------------------- */
 
 exports.deletePost = (req, res, next) => {
@@ -157,6 +151,28 @@ exports.createComment = (req, res, next) => {
         }
         )
     })
+}
+
+/* ------------------------- Delete a comment ------------------------- */
+
+exports.deleteComment = (req, res, next) => {
+    connection.getConnection(function (error) {
+        const commentId = req.params.commentId;
+
+        connection.query(
+            `DELETE FROM Comments WHERE commentId=${commentId}`,
+            function (error, response, fields) {
+                if (error) {
+                    return res.status(500).json({
+                        error: `Le commentaire que vous souhaitez supprimer n'existe pas.`
+                    });
+                }
+                return res.status(204).json({
+                    message: `Le commentaire souhaité a bien été supprimé.`
+                });
+            }
+        );
+    });
 }
 
 /* ------------------------- Get Comments of a post ------------------------- */

@@ -16,7 +16,7 @@ const Sequelize = require('sequelize');
 const User = require('../models/user');
 const { param } = require('../routes/user');
 
-const connection = mysql.createPool({
+const connection = mysql.createPool({ // createPool pour éviter les handshake errors de createConnection permet plusieurs connections, ici 10
     connectionLimit: 10,
     host: 'localhost',
     user: 'root',
@@ -68,7 +68,7 @@ exports.signup = (req, res, next) => {
                 const surname = req.body.surname;
                 const pseudonym = req.body.pseudonym;
                 const password = hash;
-                const email = maskEmail(req.body.email);
+                const email = maskEmail(req.body.email); //email masqué en BDD. Fonction MaskEmail au-dessus
                 const description = req.body.description;
                 const user = `
                 ('${name}',

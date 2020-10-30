@@ -9,7 +9,7 @@ router.post('/comment/:id', postCtrl.createComment)
 router.get('/', postCtrl.getAllPosts);
 router.get('/:id', postCtrl.getOnePost);
 router.get('/:id/comments', postCtrl.getComments);
-router.put('/:id', postCtrl.editPost);
 router.delete('/:id', postCtrl.deletePost);
+router.delete('/comment/:id', postCtrl.deleteComment)
 
 module.exports = router;

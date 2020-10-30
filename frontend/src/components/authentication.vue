@@ -48,6 +48,7 @@ export default {
           console.log(response.data.token);
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("userPseudonym", response.data.userPseudonym);
+          localStorage.setItem("id", response.data.userId);
           window.location.href = "http://localhost:8080/?#/home";
         })
         .catch(function (error) {

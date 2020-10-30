@@ -18,6 +18,13 @@
           >
             <p class="userPseudonym">{{ item.commentUserPseudonym }}:</p>
             <p class="postBody">{{ item.commentBody }}</p>
+            <button
+              class="deleteButton"
+              @click="deleteComment"
+              v-if="admin == 1"
+            >
+              Supprimer
+            </button>
           </div>
         </div>
         <div>
@@ -31,7 +38,7 @@
             @click="deletePost"
             v-if="user == storageUser"
           >
-            Button
+            Supprimer
           </button>
         </div>
       </div>
@@ -49,13 +56,29 @@ export default {
       post: null,
       comments: null,
       user: null,
+      commentId: null,
       commentUser: null,
       storageUser: localStorage.getItem("userPseudonym"),
       postId: null,
+      admin: null,
     };
   },
   mounted() {
     const postId = this.$route.params.id;
+    const userId = localStorage.getItem("id");
+    axios
+      .get(`http://localhost:3000/api/auth/account/${userId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        this.admin = response.data[0].isAdmin;
+        console.log(this.admin);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
     axios
       .get(`http://localhost:3000/api/${postId}`, {
@@ -80,7 +103,8 @@ export default {
       })
       .then((response) => {
         this.comments = response.data.response;
-        console.log(this.comments);
+        this.commentId = response.data.response[0].commentId;
+        console.log(this.commentId);
       })
       .catch(function (error) {
         console.log(error);
@@ -111,6 +135,18 @@ export default {
           headers: { "Content-Type": "application/json" },
         })
         .then((window.location.href = `http://localhost:8080/?#/`))
+        .catch((error) => console.log(error));
+    },
+    deleteComment() {
+      const postId = this.postId;
+      //const user = localStorage.getItem("userPseudonym");
+      //const postUser = this.user;
+      const commentId = this.commentId;
+      axios
+        .delete(`http://localhost:3000/api/comment/${commentId}`, {
+          headers: { "Content-Type": "application/json" },
+        })
+        .then((window.location.href = `http://localhost:8080/?#/${postId}`))
         .catch((error) => console.log(error));
     },
   },
@@ -151,6 +187,18 @@ body {
 
 .labels {
   display: none;
+}
+
+.deleteButton {
+  width: 150px;
+  height: 30px;
+  align-self: center;
+  border: none;
+  border-radius: 15px;
+  background: rgb(231, 140, 21);
+  color: white;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .userPseudonym {

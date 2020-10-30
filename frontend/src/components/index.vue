@@ -34,6 +34,9 @@
         <div>
           <router-link :to="`/post/${item.postId}`">
             <button class="viewCommentsButton">Commentaires</button>
+            <button class="deleteButton" @click="deletePost" v-if="admin == 1">
+              Supprimer
+            </button>
           </router-link>
         </div>
       </div>
@@ -52,6 +55,7 @@ export default {
     return {
       posts: null,
       image: null,
+      admin: null,
     };
   },
   methods: {
@@ -102,6 +106,22 @@ export default {
       .then((response) => {
         this.posts = response.data.response;
         console.log(this.posts);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    const userId = localStorage.getItem("id");
+
+    axios
+      .get(`http://localhost:3000/api/auth/account/${userId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        this.admin = response.data[0].isAdmin;
+        console.log(this.user);
       })
       .catch(function (error) {
         console.log(error);
