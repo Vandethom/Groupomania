@@ -1,7 +1,9 @@
 <template>
   <div id="authentication">
     <form action="">
+      <label class="labels" for="email">email</label>
       <input class="authInput" id="email" type="text" /><br />
+      <label class="labels" for="password">password</label>
       <input class="authInput" id="password" type="password" /><br />
       <button v-on:click="login" class="signInButton">Me connecter</button
       ><br />
@@ -80,7 +82,7 @@ label {
 }
 
 .authInput {
-  background: #e8f0fe;
+  background: #b1c8f0;
   margin-bottom: 2vh;
   width: 250px;
   height: 50px;
@@ -95,7 +97,7 @@ label {
   border: none;
   border-radius: 10px;
   margin: 0vh 0 1vh 0;
-  background: #51f032;
+  background: #288d14;
   color: white;
   font-weight: bold;
   font-size: 20px;
@@ -108,10 +110,14 @@ label {
   border: none;
   border-radius: 10px;
   margin-top: 2.5vh;
-  background: #2f9c1a;
+  background: #206413;
   color: white;
   font-weight: bold;
   font-size: 16px;
+}
+
+.labels {
+  display: none;
 }
 
 .forgottenId {

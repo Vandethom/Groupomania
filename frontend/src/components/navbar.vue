@@ -17,7 +17,7 @@
         <li class="item connectItem">Se connecter</li>
       </router-link>
       <router-link to="/createAccount">
-        <i class="icon fas fa-user-plus"></i>
+        <i class="icon fas fa-user-alt"></i>
         <li class="item signUpItem">Créer un compte</li>
       </router-link>
       <div>
@@ -86,7 +86,7 @@ ul {
 
 li {
   cursor: pointer;
-  color: #fd2d01;
+  color: #b40000;
   font-weight: bold;
   justify-self: baseline;
 }

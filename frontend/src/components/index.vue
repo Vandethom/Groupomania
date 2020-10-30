@@ -2,15 +2,22 @@
   <div id="home">
     <div class="postContainer">
       <form @submit.prevent="sendPost" enctype="multipart/form-data">
-        <input id="postContent" class="postForm" type="text" />
-        <label for="toPostImage"><i class="far fa-images"></i></label>
-        <input
-          v-on:change="handleFileUpload"
-          type="file"
-          ref="image"
-          name="image"
-          id="toPostImage"
-        />
+        <label
+          >Qu'avez-vous à dire aujourd'hui?<input
+            id="postContent"
+            class="postForm"
+            type="text"
+        /></label>
+        <label class="labels" for="toPostImage"
+          >Image:
+          <input
+            v-on:change="handleFileUpload"
+            type="file"
+            ref="image"
+            name="image"
+            id="toPostImage"
+        /></label>
+
         <input class="formButton" type="submit" value="Envoyer !" />
       </form>
     </div>
@@ -130,7 +137,7 @@ body {
 }
 
 .formButton {
-  background: #51f032;
+  background: #257415;
   border: none;
   border-radius: 10px;
   width: 75px;
@@ -183,6 +190,10 @@ textarea {
   width: 50%;
 }
 
+.labels {
+  display: none;
+}
+
 .postsList {
   display: flex;
   flex-direction: column-reverse;
@@ -214,7 +225,7 @@ textarea {
   align-self: center;
   border: none;
   border-radius: 15px;
-  background: rgb(186, 231, 21);
+  background: rgb(109, 121, 65);
   color: white;
   margin-left: 1.5vh;
   font-weight: bold;

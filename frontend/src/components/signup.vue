@@ -1,6 +1,7 @@
 <template>
   <div class="signup">
     <form action="">
+      <label class="labels" for="name">Prénom</label>
       <input
         class="signUpInput"
         id="name"
@@ -8,6 +9,7 @@
         placeholder="Prénom"
         required
       /><br />
+      <label class="labels" for="surname">Nom</label>
       <input
         class="signUpInput"
         id="surname"
@@ -15,6 +17,7 @@
         placeholder="Nom"
         required
       /><br />
+      <label class="labels" for="pseudonym">Pseudonyme</label>
       <input
         class="signUpInput"
         id="pseudonym"
@@ -23,6 +26,7 @@
         placeholder="Pseudonyme"
         required
       /><br />
+      <label class="labels" for="email">email</label>
       <input
         class="signUpInput"
         id="email"
@@ -30,6 +34,7 @@
         placeholder="Email"
         required
       /><br />
+      <label class="labels" for="password">password</label>
       <input
         class="signUpInput"
         id="password"
@@ -37,19 +42,13 @@
         placeholder="Mot de passe"
         required
       /><br />
+      <label class="labels" for="description">description</label>
       <input
         class="descriptionInput signUpInput"
         type="text"
         id="description"
         name="description"
       /><br />
-      <label for="female">Femme: </label>
-      <input type="radio" name="gender" id="female" /><br />
-      <label for="male">Homme: </label>
-      <input type="radio" name="gender" id="male" /><br />
-      <label for="other">Autre: </label>
-      <input type="radio" name="gender" id="other" /><br />
-
       <button
         v-on:click="signUp"
         class="signUpButton"
@@ -158,7 +157,7 @@ body {
 }
 
 .signUpInput {
-  background: #e8f0fe;
+  background: #b1c8f0;
   margin-bottom: 2vh;
   width: 250px;
   height: 50px;
@@ -179,6 +178,10 @@ body {
   font-size: 20px;
 }
 
+.labels {
+  display: none;
+}
+
 .signUpButton {
   cursor: pointer;
   width: 150px;
@@ -186,7 +189,7 @@ body {
   border: none;
   border-radius: 10px;
   margin-top: 2.5vh;
-  background: #2f9c1a;
+  background: #236615;
   color: white;
   font-weight: bold;
   font-size: 16px;
