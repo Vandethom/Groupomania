@@ -199,6 +199,6 @@ exports.updateUser = (req, res, next) => {
                     })
                 });
             })
-            .catch((error) => res.status(500).json({ error: "Ein error !" }));
+            .catch((error) => res.status(500).json({ error }));
     })
 }

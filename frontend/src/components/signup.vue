@@ -84,7 +84,6 @@ export default {
       surname: document.getElementById("surname").value,
       pseudonym: document.getElementById("pseudonym").value,
       password: document.getElementById("password").value,
-      //gender: "",
       description: document.getElementById("description").value,
     };
   },
@@ -101,7 +100,6 @@ export default {
             surname: document.getElementById("surname").value,
             pseudonym: document.getElementById("pseudonym").value,
             password: document.getElementById("password").value,
-            //gender: "",
             description: document.getElementById("description").value,
           },
           {
