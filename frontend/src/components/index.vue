@@ -33,9 +33,6 @@
         <div>
           <router-link :to="`/post/${item.postId}`">
             <button class="viewCommentsButton">Commentaires</button>
-            <button class="deleteButton" @click="deletePost" v-if="admin == 1">
-              Supprimer
-            </button>
           </router-link>
         </div>
       </div>
