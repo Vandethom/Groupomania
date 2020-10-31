@@ -17,6 +17,10 @@
       <p class="categoryDefiner">Mot de passe</p>
       <p class="info passwordPlace">********</p>
     </div>
+    <div class="category email">
+      <p class="categoryDefiner">Mot de passe</p>
+      <p class="info emailPlace">{{ user.email }}</p>
+    </div>
     <div class="category description">
       <p class="categoryDefiner">description</p>
       <p class="info descriptionPlace">{{ user.description }}</p>

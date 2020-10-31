@@ -64,9 +64,7 @@ export default {
           .getElementById("pseudonym")
           .setAttribute("value", this.user.pseudonym);
         document.getElementById("email").setAttribute("value", this.user.email);
-        document
-          .getElementById("password")
-          .setAttribute("value", this.user.password);
+
         document
           .getElementById("description")
           .setAttribute("value", this.user.description);

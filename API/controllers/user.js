@@ -186,11 +186,11 @@ exports.updateUser = (req, res, next) => {
                 const id = req.params.id;
 
                 const sql =
-                    `UPDATE Users SET name='${name}', surname='${surname}', pseudonym='${pseudonym}', password='${password}', email='${email}', description='${description}' WHERE id=51;`
+                    `UPDATE Users SET name='${name}', surname='${surname}', pseudonym='${pseudonym}', password='${password}', email='${email}', description='${description}' WHERE id=${id};`
 
                 connection.query(sql, function (error, result) {
                     if (error) {
-                        res.status(403).json({
+                        return res.status(403).json({
                             error: `Veillez à modifier un utilisateur existant.`
                         })
                     };
