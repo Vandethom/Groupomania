@@ -81,7 +81,7 @@ exports.signup = (req, res, next) => {
                     `INSERT INTO Users (name, surname, pseudonym, password, email, description) VALUES ${user}`;
                 connection.query(sql, function (error, result) {
                     if (error) {
-                        res.status(403).json({
+                        return res.status(403).json({
                             error: `Veillez à créer un utilisateur qui n'existe pas déjà et en remplissant tous les champs.`
                         })
                     };

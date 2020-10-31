@@ -157,7 +157,7 @@ exports.createComment = (req, res, next) => {
 
 exports.deleteComment = (req, res, next) => {
     connection.getConnection(function (error) {
-        const commentId = req.params.commentId;
+        const commentId = req.params.id;
 
         connection.query(
             `DELETE FROM Comments WHERE commentId=${commentId}`,

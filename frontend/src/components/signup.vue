@@ -113,7 +113,7 @@ export default {
         )
         .then((response) => {
           console.log(response.data);
-          window.location.href = "http://localhost:8080/#/authentication";
+          window.location.href = "http://localhost:8080/?#/authentication";
         })
         .catch(function (error) {
           console.log(error);

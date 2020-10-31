@@ -48,7 +48,7 @@ export default {
     },
     disconnect() {
       console.log("anything");
-      alert("smthing");
+      alert("Vous êtes bien déconnecté, à très vite !");
       localStorage.clear();
     },
   },

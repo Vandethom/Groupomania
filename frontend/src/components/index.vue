@@ -8,15 +8,14 @@
             class="postForm"
             type="text"
         /></label>
-        <label class="labels" for="toPostImage"
-          >Image:
-          <input
-            v-on:change="handleFileUpload"
-            type="file"
-            ref="image"
-            name="image"
-            id="toPostImage"
-        /></label>
+        <label class="labels" for="toPostImage">Image:</label>
+        <input
+          v-on:change="handleFileUpload"
+          type="file"
+          ref="image"
+          name="image"
+          id="toPostImage"
+        />
 
         <input class="formButton" type="submit" value="Envoyer !" />
       </form>

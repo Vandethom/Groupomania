@@ -139,8 +139,6 @@ export default {
     },
     deleteComment() {
       const postId = this.postId;
-      //const user = localStorage.getItem("userPseudonym");
-      //const postUser = this.user;
       const commentId = this.commentId;
       axios
         .delete(`http://localhost:3000/api/comment/${commentId}`, {
